@@ -1,0 +1,47 @@
+name: java-maven-sonar-ci
+
+on:
+  workflow_call:
+    secrets:
+      Workflow2_PAT_TOKEN_GITHUB:
+        required: true
+env:
+  JAVA_VERSION: '17' 
+  #SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+  #SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+      
+jobs:
+  build:
+    name: java ci sonar build
+    runs-on: ubuntu-latest
+      
+    steps:
+      - name: Checkout from Repo
+        uses: actions/checkout@v3
+          
+      - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+          
+      - name: Cache SonarQube packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+          
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+          
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=test-maven-project
