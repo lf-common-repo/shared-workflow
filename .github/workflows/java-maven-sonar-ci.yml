@@ -7,8 +7,8 @@ on:
         required: true
 env:
   JAVA_VERSION: '17' 
-  #SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-  #SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+  #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       
 jobs:
   build:
@@ -42,6 +42,6 @@ jobs:
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONARQUBE_HOST }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=test-maven-project
