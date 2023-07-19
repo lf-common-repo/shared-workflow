@@ -7,8 +7,8 @@ on:
         required: true
 env:
   JAVA_VERSION: '17' 
-  #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  #SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       
 jobs:
   build:
@@ -39,9 +39,18 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
           
-      - name: Build and analyze
-        env:
-          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: http://3.110.119.245:9000
-        run: mvn -B verify  sonar:sonar -Dsonar.projectKey=test-maven-project
+      - name: Run SonarQube Scan
+        run: |
+          export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
+          export SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }}
+          mvn install sonar:sonar \
+            -Dsonar.projectKey=test-maven-project \
+            -Dsonar.host.url=$SONAR_HOST_URL \
+            -Dsonar.login=$SONAR_TOKEN
+          
+      #- name: Build and analyze
+       # env:
+        #  GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}  # Needed to get PR information, if any
+         # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          #SONAR_HOST_URL: http://3.110.119.245:9000
+       # run: mvn -B verify  sonar:sonar -Dsonar.projectKey=test-maven-project
