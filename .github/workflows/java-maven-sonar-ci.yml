@@ -43,5 +43,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          #SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn -B verify http://3.110.119.245:9000 sonar:sonar -Dsonar.projectKey=test-maven-project
+          SONAR_HOST_URL: http://3.110.119.245:9000
+        run: mvn -B verify  sonar:sonar -Dsonar.projectKey=test-maven-project
