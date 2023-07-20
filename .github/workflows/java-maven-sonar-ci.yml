@@ -49,14 +49,14 @@ jobs:
             -D sonar.login=admin -D sonar.password=admin123 
        
       - name: creating folder to publish
-        run: mkdir javasonar && cp lf-retail/app-service/src/main/java/App.java javasonar
+        run: mkdir javasonar && cp target/*jar-with-dependencies.jar javasonar
         
       - name: Publish artifacts
         uses: actions/upload-artifact@v2
         with:
           name: app-artifacts
           path: javasonar
-           
+          if-no-files-found: warn 
            
           
       #- name: Build and analyze
