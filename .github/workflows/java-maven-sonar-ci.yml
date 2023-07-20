@@ -8,7 +8,7 @@ on:
 env:
   JAVA_VERSION: '17' 
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+  SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
       
 jobs:
   build:
@@ -42,7 +42,7 @@ jobs:
       - name: Run SonarQube Scan
         run: |
           export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
-          export SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }}
+          export SONAR_HOST_URL=${{ env.SONAR_HOST_URL }}
           mvn install sonar:sonar \
             -Dsonar.projectKey=test-maven-project \
             -Dsonar.host.url=$SONAR_HOST_URL \
