@@ -7,7 +7,7 @@ on:
         required: true
 env:
   JAVA_VERSION: '17' 
-  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+ # SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       
 jobs:
   build:
@@ -38,15 +38,15 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
           
-      - name: Run SonarQube Scan
-        run: |
-          echo "SONAR URL - > " ${{vars.SONAR_HOST_URL}}
+      #- name: Run SonarQube Scan
+       # run: |
+        #  echo "SONAR URL - > " ${{vars.SONAR_HOST_URL}}
           #export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
-          export SONAR_HOST_URL=${{vars.SONAR_HOST_URL}}
-          mvn install sonar:sonar \
-            -D sonar.projectKey=test-maven-project \
-            -D sonar.host.url=$SONAR_HOST_URL \
-            -D sonar.login=admin -D sonar.password=admin123 
+         # export SONAR_HOST_URL=${{vars.SONAR_HOST_URL}}
+          #mvn install sonar:sonar \
+           # -D sonar.projectKey=test-maven-project \
+            #-D sonar.host.url=$SONAR_HOST_URL \
+            #-D sonar.login=admin -D sonar.password=admin123 
        
       - name: creating folder to publish
         run: mkdir javasonar && cp target/*jar-with-dependencies.jar javasonar
