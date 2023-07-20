@@ -41,13 +41,13 @@ jobs:
       - name: Run SonarQube Scan
         run: |
           echo "SONAR URL - > " ${{vars.SONAR_HOST_URL}}
-          export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
+          #export SONAR_TOKEN=${{ secrets.SONAR_TOKEN }}
           export SONAR_HOST_URL=${{vars.SONAR_HOST_URL}}
           mvn install sonar:sonar \
-            -Dsonar.projectKey=test-maven-project \
-            -Dsonar.host.url=$SONAR_HOST_URL \
-            #-Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.login=admin -Dsonar.password=admin123
+            -D sonar.projectKey=test-maven-project \
+            -D sonar.host.url=$SONAR_HOST_URL \
+            -D sonar.login=admin \
+            -D sonar.password=admin123
           
       #- name: Build and analyze
        # env:
