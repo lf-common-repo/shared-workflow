@@ -46,7 +46,7 @@ jobs:
           mvn install sonar:sonar \
             -D sonar.projectKey=test-maven-project \
             -D sonar.host.url=$SONAR_HOST_URL \
-            -D sonar.login=${{ secrets.SONAR_TOKEN }} \
+            -D sonar.login=$SONAR_TOKEN \
            
           
       #- name: Build and analyze
