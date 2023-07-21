@@ -53,8 +53,8 @@ jobs:
         
       - name: Publish package
         run: mvn --batch-mode deploy
-        #env:
-         # GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}   
+        env:
+          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}   
        
           
       #- name: Build and analyze
