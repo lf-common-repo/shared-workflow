@@ -7,17 +7,16 @@ env:
   
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         
       - name: list 
         run: |
-         #cd ${{ github.workspace }}/dist
-         #cd ${{ github.workspace }}
-         chmod 600 ${{github.workspace }}/jboss.pem
-         ls -la
+         ls -l /opt/wildfly/bin/
+         echo "WAR_PATH: $WAR_PATH"
+         
 
 
       - name: Set up JDK 17
@@ -32,50 +31,26 @@ jobs:
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} 
           JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} 
           AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
-          WAR_PATH: ${{github.workspace }}/dist/helloworld.war
+          #WAR_PATH: ${{github.workspace }}/dist
           
         run: |
 
-         echo "Copy files to target server"
-         #chmod +rx ubuntu@13.234.120.105:PACKAGETEMP/temp -p $AWS_SSH_KEY
-         eval "$(ssh-agent -k)"
-         eval "$(ssh-agent)"
-         ssh-add ${{github.workspace }}/jboss.pem
-         #-vvv -o StrictHostKeyChecking=no
-         ssh -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem -T ubuntu@13.234.120.105
-         chmod +rx ${{github.workspace }}/dist/helloworld.war
-         rsync -av -e "ssh -vvv -o StrictHostKeyChecking=no -i ${{github.workspace }}/jboss.pem" -T "${{github.workspace}}/dist/helloworld.war" ubuntu@13.234.120.105:PACKAGETEMP/temp
+         #echo "Creating temp dir"
+         #sshpass -p $AWS_SSH_KEY ssh root@13.234.120.105 'mkdir -v PACKAGETEMP' 
          
-         #sshpass -p $AWS_SSH_KEY sudo scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:PACKAGETEMP/temp
-         #scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:PACKAGETEMP/temp -p $AWS_SSH_KEY
-
-         #echo "Running undeploy command"
-         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="undeploy helloworld.war --server-groups=HelloWorld"'
+         #sshpass -p ${{github.workspace }}/rakbank-ubuntuserver1-key.pem ssh root@13.234.120.105 'mkdir -v PACKAGETEMP' 
+        
+         #echo "Copy files to target server"
+         #sshpass -p P@ssw0rd scp -r -v ${{github.workspace }}/dist/helloworld.war ubuntu@13.234.120.105:$PACKAGETEMP/hello.war
+         
+         echo "Running undeploy command"
+         #cd ${{ github.workspace }}/dist
+         '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="undeploy ${{ github.workspace }}/dist/helloworld.war"'
+         #sshpass -p ${{github.workspace }}/rakbank-ubuntuserver1-key.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="undeploy helloworld.war --server-groups=HelloWorld"'
 
          #echo "Running deploy command"
-         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deploy PACKAGETEMP/temp/helloworld.war --server-groups=HelloWorld"'
+         #'/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deploy $WAR_PATH --server-groups=HelloWorld"'
+         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deploy ${{github.workspace }}/dist/helloworld.war --server-groups=HelloWorld"'
 
          #echo "Check deployment status"
          #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deployment-info --name=helloworld.war"'
-      
-
- 
-
-      #  run: |  
-       #   chmod 755 ${{github.workspace }}/dist/helloworld.war
-        #  curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
-         # sleep 5
-          #curl -u $JBOSS_USERNAME:$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
-
-          
-#        run: |  
- #         curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/undeploy?name=$($WAR_PATH)
-  #        sleep 5
-   #       curl -u -DJBOSS_USERNAME=$JBOSS_USERNAME -DJBOSS_PASSWORD=$JBOSS_PASSWORD -T $WAR_PATH $JBOSS_ENDPOINT/management-webapp/deploy?name=$($WAR_PATH)          
-          
-
-        #run: |
-         # chmod +rx ${{ github.workspace }}/dist/helloworld.war
-          #curl -F "file=@${WAR_PATH}" -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=upload"
-          #curl -X POST -u "${JBOSS_USERNAME}:${JBOSS_PASSWORD}" "http://${JBOSS_ENDPOINT}:${JBOSS_PORT}/management/domain/servers/server-one/deployment/${APPLICATION_NAME}.war?operation=redeploy"        
-         
