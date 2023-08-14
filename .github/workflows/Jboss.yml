@@ -2,12 +2,8 @@ name: Deploy WAR to JBoss
 
 on:
   workflow_call:
-    secrets:
-      Workflow2_PAT_TOKEN_GITHUB:
-        required: true
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  
   
 jobs:
   deploy:
@@ -23,31 +19,25 @@ jobs:
          
 
 
-      - name: Set up JDK 17
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
+          java-version: '11'
           distribution: 'temurin'  
           
       - name: login to JBoss and deploy war file
         env:
           JBOSS_USERNAME: ${{ secrets.JBOSS_USERNAME }} 
           JBOSS_PASSWORD: ${{ secrets.JBOSS_PASSWORD }} 
-          JBOSS_ENDPOINT: ${{ vars.JBOSS_ENDPOINT }} 
-          AWS_SSH_KEY: ${{ secrets.AWS_SSH_KEY }}
-          #WAR_PATH: ${{github.workspace }}/dist
           
         run: |
-
-         
+        
          echo "Running undeploy command"
-         #cd ${{ github.workspace }}/dist
-         '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="undeploy ${{ github.workspace }}/dist/helloworld.war"'
-         #sshpass -p ${{github.workspace }}/rakbank-ubuntuserver1-key.pem ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="undeploy helloworld.war --server-groups=HelloWorld"'
-
-         #echo "Running deploy command"
-         #'/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deploy $WAR_PATH --server-groups=HelloWorld"'
-         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deploy ${{github.workspace }}/dist/helloworld.war --server-groups=HelloWorld"'
-
-         #echo "Check deployment status"
-         #sshpass -p $AWS_SSH_KEY ssh ubuntu@13.234.120.105 '/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD --command="deployment-info --name=helloworld.war"'
+         /opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD  --command="undeploy --name=helloworld.war"
+         
+         echo "Running deploy command"
+         /opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD  --command="deploy /home/ubuntu/app-dir/helloworld.war"
+         
+         echo "Running deploy status command"
+         /opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD  --command="deployment-info --name=helloworld.war"
+         
