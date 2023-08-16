@@ -5,10 +5,10 @@ on:
     types:      
      - run-called-workflow
       
- workflow_call:
-   secrets:
-      Workflow2_PAT_TOKEN_GITHUB:
-        required: true
+ #workflow_call:
+  # secrets:
+   #   Workflow2_PAT_TOKEN_GITHUB:
+    #    required: true
 
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}        
@@ -21,10 +21,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      #- name: list 
-       # run: |
-        # ls -l /opt/wildfly/bin/
-         #echo "WAR_PATH: $WAR_PATH"
+      - name: list 
+        run: |
+         ls -l /opt/wildfly/bin/
+         echo "WAR_PATH: $WAR_PATH"
          
 
 
