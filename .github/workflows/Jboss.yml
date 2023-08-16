@@ -21,10 +21,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         
-      - name: list 
-        run: |
-         ls -l /opt/wildfly/bin/
-         echo "WAR_PATH: $WAR_PATH"
+      #- name: list 
+       # run: |
+        # ls -l /opt/wildfly/bin/
+         #echo "WAR_PATH: $WAR_PATH"
          
 
 
