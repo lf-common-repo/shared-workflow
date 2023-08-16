@@ -1,10 +1,14 @@
 name: Deploy WAR to JBoss
 
 on:
- workflow_call:
-   secrets:
-      Workflow2_PAT_TOKEN_GITHUB:
-        required: true
+  repository_dispatch:    
+    types:      
+      - run-called-workflow
+      
+ #workflow_call:
+  # secrets:
+   #   Workflow2_PAT_TOKEN_GITHUB:
+    #    required: true
 
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}        
