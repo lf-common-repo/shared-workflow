@@ -1,9 +1,9 @@
 name: Deploy WAR to JBoss
 
 on:
-  #repository_dispatch:    
-   # types:      
-    #  - run-called-workflow
+  repository_dispatch:    
+    types:      
+     - run-called-workflow
       
  workflow_call:
    secrets:
