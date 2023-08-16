@@ -1,14 +1,20 @@
 name: Deploy WAR to JBoss
 
 on:
+
+   workflow_run:
+    workflows: ["jboss-caller-new"]
+    types:
+      - completed
+      
   #repository_dispatch:    
     #types:      
      #- run-called-workflow
       
- workflow_call:
-   secrets:
-      Workflow2_PAT_TOKEN_GITHUB:
-        required: true
+ #workflow_call:
+  # secrets:
+   #   Workflow2_PAT_TOKEN_GITHUB:
+    #    required: true
 
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}        
@@ -16,6 +22,7 @@ env:
   
 jobs:
   deploy:
+    runs-on: ${{ github.event.inputs.runner }}
     #runs-on: self-hosted
     steps:
       - name: Checkout code
