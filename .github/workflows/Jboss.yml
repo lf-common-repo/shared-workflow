@@ -1,20 +1,8 @@
 name: Deploy WAR to JBoss
 
 on:
-
-   #workflow_run:
-    #workflows: ["jboss-caller-new"]
-    #types:
-     # - completed
-      
   repository_dispatch:    
     types: [jboss-caller-new]
-      
- #workflow_call:
-  # secrets:
-   #   Workflow2_PAT_TOKEN_GITHUB:
-    #    required: true
-
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}        
   
