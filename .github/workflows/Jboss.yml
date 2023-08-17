@@ -5,7 +5,7 @@ on:
    # types: [jboss-caller-new]
   workflow_call:
    inputs:
-     env: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+     token: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
         #required: true 
 #env:
  # GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}        
