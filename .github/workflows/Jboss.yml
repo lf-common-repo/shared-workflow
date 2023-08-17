@@ -8,7 +8,7 @@ on:
      # - completed
       
   repository_dispatch:    
-    types: [run-callee-workflow]
+    types: [jboss-caller-new]
       
  #workflow_call:
   # secrets:
