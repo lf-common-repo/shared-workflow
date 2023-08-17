@@ -2,14 +2,13 @@ name: Deploy WAR to JBoss
 
 on:
 
-   workflow_run:
-    workflows: ["jboss-caller-new"]
-    types:
-      - completed
+   #workflow_run:
+    #workflows: ["jboss-caller-new"]
+    #types:
+     # - completed
       
-  #repository_dispatch:    
-    #types:      
-     #- run-called-workflow
+  repository_dispatch:    
+    types: [run-callee-workflow]
       
  #workflow_call:
   # secrets:
@@ -22,8 +21,8 @@ env:
   
 jobs:
   deploy:
-    runs-on: ${{ github.event.inputs.runner }}
-    #runs-on: self-hosted
+    #runs-on: ${{ github.event.inputs.runner }}
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
