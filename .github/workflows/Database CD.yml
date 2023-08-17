@@ -1,7 +1,11 @@
 name: Deploy MySQL Script
 
 on: 
-   workflow_dispatch
+   #workflow_dispatch
+   workflow_call:
+    secrets:
+      Workflow2_PAT_TOKEN_GITHUB:
+        required: true
 
 jobs:
    create-db:
