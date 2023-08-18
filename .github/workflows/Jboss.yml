@@ -2,9 +2,11 @@ name: Deploy WAR to JBoss
 
 on:
   workflow_call:
-   inputs:
-     Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-          
+    secrets:
+      Workflow2_PAT_TOKEN_GITHUB:
+        required: true
+        
+        
 env:
  Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}        
   
