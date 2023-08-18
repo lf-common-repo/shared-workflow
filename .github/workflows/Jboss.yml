@@ -1,10 +1,10 @@
 name: Deploy WAR to JBoss
 
 on:
-  workflow_call:
-    secrets:
-       Workflow2_PAT_TOKEN_GITHUB:
-        required: true
+ workflow_call:
+  secrets:
+    Workflow2_PAT_TOKEN_GITHUB:
+      required: true
         
         
 env:
@@ -13,7 +13,11 @@ env:
   
 jobs:
   deploy:
-    runs-on: ${{ inputs.runner }}
+    strategy:
+      matrix:
+        runs-on: [self-hosted]
+        
+    runs-on: ${{ matrix.runs-on }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
