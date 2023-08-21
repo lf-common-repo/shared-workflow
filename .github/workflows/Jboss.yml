@@ -1,23 +1,23 @@
 name: Deploy WAR to JBoss
 
 on:
- workflow_call:
-  secrets:
-    Workflow2_PAT_TOKEN_GITHUB:
-      required: true
+ #workflow_call:
+  #secrets:
+   # Workflow2_PAT_TOKEN_GITHUB:
+    #  required: true
         
         
-env:
- Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}        
+#env:
+ #Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}        
   
   
 jobs:
   deploy:
-    strategy:
-      matrix:
-        runs-on: [self-hosted]
+   # strategy:
+    #  matrix:
+     #   runs-on: [self-hosted]
         
-    runs-on: ${{ matrix.runs-on }}
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -42,8 +42,8 @@ jobs:
           
         run: |
         
-         echo "Running undeploy command"
-         /opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD  --command="undeploy --name=helloworld.war"
+         #echo "Running undeploy command"
+         #/opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD  --command="undeploy --name=helloworld.war"
          
          echo "Running deploy command"
          /opt/wildfly/bin/jboss-cli.sh --connect --controller=13.234.120.105 --user=$JBOSS_USERNAME --password=$JBOSS_PASSWORD  --command="deploy /home/ubuntu/app-dir/helloworld.war"
