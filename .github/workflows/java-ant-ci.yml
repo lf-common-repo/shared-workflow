@@ -35,10 +35,15 @@ jobs:
            -D sonar.login=admin -D sonar.password=admin123 
         
     - name: Build with Ant
-      run: ant -noinput -buildfile build-ci.xml jar
+      run: ant -noinput -buildfile build.xml
 
-    #- run: ant -noinput -buildfile build.xml
-    #- uses: actions/upload-artifact@v3
-     # with:
-      # name: Package
-       #path: build/jar  
+    - run: ant -noinput -buildfile build.xml
+    - uses: actions/upload-artifact@v3
+      with:
+       name: Package
+       path: build/jar 
+    
+    - name: Download a single artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: my-artifact       
