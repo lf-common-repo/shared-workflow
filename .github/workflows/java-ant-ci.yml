@@ -1,7 +1,10 @@
 name: reusable workflow
 
 on:
- workflow_dispatch:
+  workflow_call:
+   secrets:
+      Workflow2_PAT_TOKEN_GITHUB:
+        required: true
  
 env:
   JAVA_VERSION: '17'                       
