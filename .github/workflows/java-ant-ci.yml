@@ -37,5 +37,8 @@ jobs:
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml
 
-    - name: Publish package
-      run: mvn --batch-mode deploy      
+    - run: ant -noinput -buildfile build.xml
+    - uses: actions/upload-artifact@v3
+      with:
+       name: Package
+       path: build/jar  
