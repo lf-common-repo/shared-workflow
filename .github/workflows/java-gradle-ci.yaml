@@ -6,7 +6,7 @@ on:
       Workflow2_PAT_TOKEN_GITHUB:
         required: true
 env:
-  JAVA_VERSION: '17' 
+  JAVA_VERSION: '11' 
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
 
