@@ -39,20 +39,19 @@ jobs:
       
     - name: Publish to GitHub Packages
       run: |
-        echo "//maven.pkg.github.com/:_authToken=${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}" >> ~/.m2/settings.xml
         jarFilePath=$(find . -name "*.jar" | head -n 1)  # Use the first JAR file found
-        jarFileName=$(basename "$jarFilePath")
         echo "Publishing JAR: $jarFilePath"
-        echo "Jar file name: $jarFileName"
         mvn deploy:deploy-file \
-            -Durl=https://maven.pkg.github.com/lf-common-repo/shared-workflow \
-            -Dfile="$jarFilePath" \
-            -DrepositoryId=github \
-            -DgroupId=com.example \
-            -DartifactId=my-artifact \
-            -Dversion=1.0 \
-            -DgeneratePom=true \
-            -DgeneratePom.description="My description"
+             -Durl=https://maven.pkg.github.com/lf-common-repo/shared-workflow \
+             -Dfile="$jarFilePath" \
+             -DrepositoryId=github \
+             -DgroupId=com.example \
+             -DartifactId=my-artifact \
+             -Dversion=1.0 \
+             -DgeneratePom=true \
+             -DgeneratePom.description="My description" \
+             -Dmaven.repo.username=${{ env.GITHUB_ACTOR }} \
+             -Dmaven.repo.password=${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
 
    # - run: ant -noinput -buildfile build.xml
     #- uses: actions/upload-artifact@v3
