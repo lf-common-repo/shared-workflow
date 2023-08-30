@@ -40,12 +40,12 @@ jobs:
     - name: Publish to GitHub Packages
       run: |
         echo "//npm.pkg.github.com/:_authToken=${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}" >> ~/.npmrc
-        echo "@<lf-common-repo>:registry=https://npm.pkg.github.com" >> ~/.npmrc
+        echo "@lf-common-repo:registry=https://npm.pkg.github.com" >> ~/.npmrc
         jarFilePath=$(find . -name "*.jar")
         echo "Publishing JAR: $jarFilePath"
         curl -XPUT -H "Authorization: token ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}" \
              -H "Accept: application/vnd.github.v3+json" \
-             "https://npm.pkg.github.com/<lf-common-repo>/shared-workflow/${jarFilePath}?publish=true"      
+             "https://npm.pkg.github.com/lf-common-repo/shared-workflow/${jarFilePath}?publish=true"      
 
    # - run: ant -noinput -buildfile build.xml
     #- uses: actions/upload-artifact@v3
