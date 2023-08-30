@@ -7,7 +7,8 @@ on:
         required: true
  
 env:
-  JAVA_VERSION: '17'                       
+  JAVA_VERSION: '17'
+  Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
 
 jobs:
   build_and_test:
