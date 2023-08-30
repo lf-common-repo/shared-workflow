@@ -41,11 +41,14 @@ jobs:
       run: |
         echo "//npm.pkg.github.com/:_authToken=${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}" >> ~/.npmrc
         echo "@lf-common-repo:registry=https://npm.pkg.github.com" >> ~/.npmrc
-        jarFilePath=$(find . -name "*.jar")
+        jarFilePath=$(find . -name "*.jar" | head -n 1)  # Use the first JAR file found
+        jarFileName=$(basename "$jarFilePath")
         echo "Publishing JAR: $jarFilePath"
-        curl -XPUT -H "Authorization: token ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}" \
-             -H "Accept: application/vnd.github.v3+json" \
-             "https://npm.pkg.github.com/lf-common-repo/shared-workflow/${jarFilePath}?publish=true"      
+        echo "Jar file name: $jarFileName"
+        curl -XPUT -H "Authorization: Bearer ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            --upload-file "$jarFilePath" \
+            "https://npm.pkg.github.com/lf-common-repo/shared-workflow/$jarFileName"     
 
    # - run: ant -noinput -buildfile build.xml
     #- uses: actions/upload-artifact@v3
