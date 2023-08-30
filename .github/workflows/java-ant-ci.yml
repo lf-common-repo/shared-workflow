@@ -44,7 +44,6 @@ jobs:
         mvn deploy:deploy-file \
              -Durl=https://maven.pkg.github.com/lf-common-repo/shared-workflow \
              -Dfile="$jarFilePath" \
-             -DrepositoryId=github \
              -DgroupId=com.example \
              -DartifactId=my-artifact \
              -Dversion=1.0 \
