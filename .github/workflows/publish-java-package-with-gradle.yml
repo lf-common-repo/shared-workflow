@@ -5,10 +5,14 @@ on:
     secrets:
       Workflow2_PAT_TOKEN_GITHUB:
         required: true
+      JAVA_TOKEN:
+        required: true
+      USERNAME:
+       required: true
+ 
 env:
   JAVA_VERSION: '11' 
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
   GITHUB_ACTOR: ${{ secrets.USERNAME }}
 
 jobs:
@@ -48,5 +52,5 @@ jobs:
       with:
         arguments: publish
       env:
-          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+          GITHUB_TOKEN: ${{ secrets.JAVA_TOKEN }}
 
