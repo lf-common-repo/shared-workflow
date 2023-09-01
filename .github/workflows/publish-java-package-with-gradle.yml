@@ -45,9 +45,10 @@ jobs:
             -D sonar.login=admin -D sonar.password=admin123 
 
     - name: Publish package
-      uses: gradle/gradle-build-action@749f47bda3e44aa060e82d7b3ef7e40d953bd629
+      uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: publish
       env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW2_PAT_TOKEN_GITHUB}}
+          GITHUB_ACTOR: ${{ secrets.GITHUB_USERNAME}}
 
