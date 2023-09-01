@@ -7,9 +7,7 @@ on:
         required: true
       JAVA_TOKEN:
         required: true
-      USERNAME:
-       required: true
- 
+   
 env:
   JAVA_VERSION: '11' 
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
