@@ -10,7 +10,8 @@ on:
  
 env:
   JAVA_VERSION: '17'
-  Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+  MAVEN_SETTINGS_PATH: .github/settings.xml
+  #Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
   ANT_TOKEN: ${{ secrets.ANT_TOKEN }}
   
 
@@ -42,25 +43,8 @@ jobs:
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml
 
-    - name: Configure Maven settings
-      run: |
-          mkdir -p $HOME/.m2
-          echo '<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
-            <servers>
-              <server>
-                <id>github</id>
-                <username>${env.ANT_TOKEN}</username>
-                <password>${env.ANT_TOKEN}</password>
-              </server>
-            </servers>
-          </settings>' > $HOME/.m2/settings.xml
-      env:
-          ANT_TOKEN: ${{ secrets.ANT_TOKEN }}      
-     
     - name: Publish with Maven
-      run: mvn clean deploy -e -X
+      run: mvn clean deploy -s $MAVEN_SETTINGS_PATH
       env:
         ANT_TOKEN: ${{ secrets.ANT_TOKEN }}
         
