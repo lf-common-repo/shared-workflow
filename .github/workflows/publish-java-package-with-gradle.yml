@@ -11,7 +11,6 @@ on:
 env:
   JAVA_VERSION: '11' 
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  GITHUB_ACTOR: ${{ secrets.USERNAME }}
 
 jobs:
   build:
