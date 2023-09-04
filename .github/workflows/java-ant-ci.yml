@@ -37,21 +37,24 @@ jobs:
         
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml
+
+    - name: Publish package
+      run: mvn --batch-mode deploy      
       
-    - name: Publish to GitHub Packages
-      run: |
-        jarFilePath=$(find . -name "*.jar" | head -n 1)  # Use the first JAR file found
-        echo "Publishing JAR: $jarFilePath"
-        mvn deploy:deploy-file \
-             -Durl=https://maven.pkg.github.com/lf-common-repo/shared-workflow \
-             -Dfile="$jarFilePath" \
-             -DgroupId=com.example \
-             -DartifactId=my-artifact \
-             -Dversion=1.0 \
-             -DgeneratePom=true \
-             -DgeneratePom.description="My description" \
-             -Dmaven.repo.username=${{ env.GITHUB_ACTOR }} \
-             -Dmaven.repo.password=${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+    #- name: Publish to GitHub Packages
+     # run: |
+      #  jarFilePath=$(find . -name "*.jar" | head -n 1)  # Use the first JAR file found
+       # echo "Publishing JAR: $jarFilePath"
+        #mvn deploy:deploy-file \
+         #    -Durl=https://maven.pkg.github.com/lf-common-repo/shared-workflow \
+          #   -Dfile="$jarFilePath" \
+           #  -DgroupId=com.example \
+            # -DartifactId=my-artifact \
+             #-Dversion=1.0 \
+             #-DgeneratePom=true \
+             #-DgeneratePom.description="My description" \
+             #-Dmaven.repo.username=${{ env.GITHUB_ACTOR }} \
+             #-Dmaven.repo.password=${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
 
    # - run: ant -noinput -buildfile build.xml
     #- uses: actions/upload-artifact@v3
