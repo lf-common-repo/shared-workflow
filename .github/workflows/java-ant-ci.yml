@@ -5,10 +5,13 @@ on:
    secrets:
       Workflow2_PAT_TOKEN_GITHUB:
         required: true
+      ANT_TOKEN:
+        required: true
  
 env:
   JAVA_VERSION: '17'
   Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+  ANT_TOKEN: ${{ secrets.ANT_TOKEN }}
   
 
 jobs:
@@ -42,8 +45,8 @@ jobs:
     - name: Publish with Maven
       run: mvn clean deploy
       env:
-        Workflow2_PAT_TOKEN_GITHUB: ${{ env.Workflow2_PAT_TOKEN_GITHUB }}
-   
+        ANT_TOKEN: ${{ secrets.ANT_TOKEN }}
+        
    # - run: ant -noinput -buildfile build.xml
     #- uses: actions/upload-artifact@v3
      # with:
