@@ -44,7 +44,7 @@ jobs:
       run: ant -noinput -buildfile build.xml
 
     - name: Publish with Maven
-      run: mvn clean deploy --settings $MAVEN_SETTINGS_PATH
+      run: mvn clean deploy #--settings $MAVEN_SETTINGS_PATH
       env:
         ANT_TOKEN: ${{ secrets.ANT_TOKEN }}
         
