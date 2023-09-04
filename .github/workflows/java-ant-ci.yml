@@ -60,7 +60,7 @@ jobs:
           ANT_TOKEN: ${{ secrets.ANT_TOKEN }}      
      
     - name: Publish with Maven
-      run: mvn clean deploy
+      run: mvn clean deploy -e -X
       env:
         ANT_TOKEN: ${{ secrets.ANT_TOKEN }}
         
