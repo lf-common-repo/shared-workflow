@@ -39,7 +39,10 @@ jobs:
       run: ant -noinput -buildfile build.xml
 
     - name: Publish package
-      run: mvn --batch-mode deploy      
+      run: mvn --batch-mode deploy -f pom.xml      
+
+    #- name: Publish package
+     # run: mvn --batch-mode deploy      
       
     #- name: Publish to GitHub Packages
      # run: |
