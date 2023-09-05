@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
 env:
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+  ANT_TOKEN: ${{ secrets.ANT_TOKEN }}
 
 jobs:
   deploy:
@@ -20,7 +21,7 @@ jobs:
           curl -LO "https://maven.pkg.github.com/lf-common-repo/shared-workflow/PACKAGE_NAME/VERSION/PACKAGE_NAME-VERSION.jar"
           mv "PACKAGE_NAME-VERSION.jar" /home/ubuntu/app-dir/helloworld.jar
         env:
-          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}        
+          GITHUB_TOKEN: ${{ secrets.ANT_TOKEN }}        
 
       - name: list 
         run: |
