@@ -1,71 +1,67 @@
-name: React Native CI
+name: React Native Build and Test
 
 on:
  workflow_dispatch:
 
 env:
   JAVA_VERSION: '17'
-  NODE_VERSION: '14' 
-
+  NODE_VERSION: '14'
+  
 jobs:
-  build:
+  android:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
-        with:
-          java-version: ${{env.JAVA_VERSION}}
-          distribution: 'temurin'          
-
-      - name: Install Node.js
+      - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: ${{env.NODE_VERSION}}
-          
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+          node-version: ${{ env.NODE_VERSION }}  # Choose the appropriate Node.js version
 
       - name: Install dependencies
-        run: npm install          
-       
-      - name: Build and test
-        run: npm run test      
-        
-      - name: Cache Maven dependencies
-        uses: actions/cache@v3
+        run: npm install
+
+      - name: Build Android
+        run: npm run android:build  # Replace with your actual Android build script
+
+      - name: Set up Android emulator
+        uses: wixplosives/actions-android-emulator@v2
         with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          api-level: 30  # Adjust to your target API level
+          package: 'system-images;android-30;google_apis;x86_64'
+          script: |
+            emulator -avd test -no-skin -no-audio -no-window &
+            android-wait-for-emulator
+            adb shell input keyevent 82 &
 
-      - name: Build and test Java project
-        run: mvn -B package --file pom.xml             
-        
-      - name: Publish package
-        run: mvn --batch-mode deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}         
+      - name: Run Android tests
+        run: npm run android:test  # Replace with your actual Android test script
 
-      #- name: Cache Yarn packages
-       # uses: actions/cache@v2
-        #with:
-         # path: ~/.yarn
-          #key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+  ios:
+    runs-on: macos-latest
 
-      #- name: Install npm dependencies
-       # run: yarn install
-       
-      #- name: Build and test React Native project
-       # run: yarn test
-        
-    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}  # Choose the appropriate Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build iOS
+        run: npm run ios:build  # Replace with your actual iOS build script
+
+      - name: Set up Xcode
+        uses: xcpretty/xcodebuild@v3
+
+      - name: Run iOS emulator
+        run: npm run ios:emulator  # Replace with your actual iOS emulator script
+
+      - name: Run iOS tests
+        run: npm run ios:test  # Replace with your actual iOS test script
