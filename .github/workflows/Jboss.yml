@@ -27,7 +27,7 @@ jobs:
       - name: Move JAR file to /home/ubuntu/app-dir/
         run: |
            sudo mv "java-ant-sonar-1.0.0.jar" /home/ubuntu/app-dir/helloworld.jar
-           sudo chmod 755 helloworld.jar
+           sudo chmod 755 /home/ubuntu/app-dir/helloworld.jar
         shell: bash          
 
       - name: list 
