@@ -1,10 +1,15 @@
-name: dummy1
+name: Sleep Mode Workflow
 
 on:
- workflow_dispatch:
+  workflow_dispatch:
+    inputs:
+      manual_trigger:
+        description: 'Manually trigger the workflow'
+        required: true
+        default: 'false'
 
 env:
-  JAVA_VERSION: '17'                       
+  JAVA_VERSION: '17'
 
 jobs:
   dummy1:
@@ -12,11 +17,39 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: 'Checkout GitHub Action'
-      uses: actions/checkout@v3
-      
-    - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
-      uses: actions/setup-java@v3
-      with:
-        java-version: ${{ env.JAVA_VERSION }}
-        distribution: 'temurin' 	  
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+
+  dummy2:
+
+    runs-on: self-hosted
+
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3
+
+      - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: 'temurin'
+
+      - name: Sleep Until Manually Triggered
+        id: sleep_step
+        run: |
+          if [[ "${{ github.event.inputs.manual_trigger }}" == "true" ]]; then
+            echo "Manual trigger received. Continuing with the workflow."
+          else
+            echo "Workflow is in sleep mode. Manual trigger not received."
+            echo "You can manually trigger this workflow when ready."
+            while true; do
+              sleep 60 # Adjust the sleep interval as needed
+            done
+          fi
+
