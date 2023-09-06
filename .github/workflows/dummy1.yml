@@ -1,4 +1,4 @@
-name: reusable workflow
+name: dummy1
 
 on:
  workflow_dispatch:
