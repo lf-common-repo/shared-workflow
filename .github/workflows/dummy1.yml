@@ -36,8 +36,8 @@ jobs:
       - name: Conditional Sleep
         run: |
          if [[ "${SLEEP_ENABLED}" == "true" ]]; then
-           echo "Sleeping for 5 minutes..."
-           sleep 300
+           #echo "Sleeping for 5 minutes..."
+           #sleep 300
          else
           echo "Sleep not enabled."
          fi
