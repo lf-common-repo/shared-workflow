@@ -43,5 +43,3 @@ jobs:
          fi
         env:
            SLEEP_ENABLED: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}   
-
-         
