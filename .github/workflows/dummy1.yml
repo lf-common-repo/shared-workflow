@@ -10,6 +10,7 @@ on:
 
 env:
   JAVA_VERSION: '17'
+  SLEEP_ENABLED: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }} 
 
 jobs:
   dummy1:
@@ -21,25 +22,13 @@ jobs:
         uses: actions/checkout@v3
 
   dummy2:
+     environment: DEV
+     name: App  Deoloyment Dev
+     if: ${{ github.event.inputs.manual_trigger =='true' }}; then
+         sleep 30
+     
+     runs-on: self-hosted
+     steps:
 
-    runs-on: self-hosted
-
-    steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
-
-      - name: Sleep for 5 minutes
-        run: |
-         echo "Sleeping for 5 minutes..."
-         sleep 300  # 300 seconds = 5 minutes
-
-      - name: Conditional Sleep
-        run: |
-         if [[ "${SLEEP_ENABLED}" == "true" ]]; then
-           #echo "Sleeping for 5 minutes..."
-           #sleep 300
-         else
-          echo "Sleep not enabled."
-         fi
-        env:
-           SLEEP_ENABLED: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}   
