@@ -20,12 +20,6 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
 
-      - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
-        uses: actions/setup-java@v3
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: 'temurin'
-
   dummy2:
 
     runs-on: self-hosted
@@ -34,22 +28,20 @@ jobs:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
 
-      - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
-        uses: actions/setup-java@v3
-        with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: 'temurin'
-
-      - name: Sleep Until Manually Triggered
-        id: sleep_step
+      - name: Sleep for 5 minutes
         run: |
-          if [[ "${{ github.event.inputs.manual_trigger }}" == "true" ]]; then
-            echo "Manual trigger received. Continuing with the workflow."
-          else
-            echo "Workflow is in sleep mode. Manual trigger not received."
-            echo "You can manually trigger this workflow when ready."
-            while true; do
-              sleep 60 # Adjust the sleep interval as needed
-            done
-          fi
+         echo "Sleeping for 5 minutes..."
+         sleep 300  # 300 seconds = 5 minutes
 
+      - name: Conditional Sleep
+        run: |
+         if [[ "${SLEEP_ENABLED}" == "true" ]]; then
+           echo "Sleeping for 5 minutes..."
+           sleep 300
+         else
+          echo "Sleep not enabled."
+         fi
+        env:
+           SLEEP_ENABLED: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}   
+
+         
