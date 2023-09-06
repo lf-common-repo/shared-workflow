@@ -17,7 +17,10 @@ jobs:
     steps:
       - name: 'Checkout GitHub Action'
         uses: actions/checkout@v3
-
+    
+      - name: 'waiting'
+        run : |
+           sh sleep 5000s
   #dummy2:
    # runs-on: self-hosted
     #if: ${{ inputs.manual_trigger == 'true' }}
