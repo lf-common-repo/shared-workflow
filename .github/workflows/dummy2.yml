@@ -1,4 +1,4 @@
-name: reusable workflow
+name: dummy2
 
 on:
  workflow_dispatch:
@@ -7,7 +7,7 @@ env:
   JAVA_VERSION: '17'                       
 
 jobs:
-  build_and_test:
+  dummy2:
 
     runs-on: self-hosted
 
