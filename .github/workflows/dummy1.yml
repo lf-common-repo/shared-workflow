@@ -1,4 +1,4 @@
-name: Sleep Mode Workflow
+name: dummy1
 
 on:
   workflow_dispatch:
