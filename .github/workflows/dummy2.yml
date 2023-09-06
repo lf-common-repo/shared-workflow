@@ -3,9 +3,6 @@ name: dummy2
 on:
  workflow_dispatch:
 
-env:
-  JAVA_VERSION: '17'                       
-
 jobs:
   dummy2:
 
@@ -13,10 +10,4 @@ jobs:
 
     steps:
     - name: 'Checkout GitHub Action'
-      uses: actions/checkout@v3
-      
-    - name: Setup Java Sdk ${{ env.JAVA_VERSION }}
-      uses: actions/setup-java@v3
-      with:
-        java-version: ${{ env.JAVA_VERSION }}
-        distribution: 'temurin' 	  
+      uses: actions/checkout@v3     
