@@ -16,23 +16,14 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
-      #- name: Checkout from Repo
-       # uses: actions/checkout@v3
+      - name: Checkout from Repo
+        uses: actions/checkout@v3
           
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}
         uses: actions/setup-java@v3
         with:
           java-version: ${{env.JAVA_VERSION}}
           distribution: 'temurin'
-          
-      #- name: Cache SonarQube packages
-        #uses: actions/cache@v3
-        #with:
-         # path: ~/.sonar/cache
-          #key: ${{ runner.os }}-sonar
-          #restore-keys: ${{ runner.os }}-sonar
-          
-
           
       - name: Run SonarQube Scan
         run: |
