@@ -32,12 +32,7 @@ jobs:
           #key: ${{ runner.os }}-sonar
           #restore-keys: ${{ runner.os }}-sonar
           
-      - name: Cache Maven packages
-        uses: actions/cache@v3
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
+
           
       - name: Run SonarQube Scan
         run: |
@@ -48,6 +43,13 @@ jobs:
             -D sonar.projectKey=test-maven-project \
             -D sonar.host.url=$SONAR_HOST_URL \
             -D sonar.login=admin -D sonar.password=admin123 
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2            
          
       - name: Build project with Maven
         run: mvn -B package --file pom.xml	 
