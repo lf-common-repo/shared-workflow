@@ -16,12 +16,6 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
-      - name: Checkout from Repo
-        uses: actions/checkout@v3
-        with:
-         repository: lf-retail/app-service
-         ref: main
-          
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}
         uses: actions/setup-java@v3
         with:
