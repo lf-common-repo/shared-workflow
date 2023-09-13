@@ -26,7 +26,7 @@ jobs:
     name: java ci sonar build
     runs-on: ubuntu-latest
     outputs:
-      build-and-verify: ${{ steps.set-output-defaults.outputs.repository }}
+      repository: ${{ steps.set-output-defaults.outputs.repository }}
     steps:
       - name: set outputs with default values
         id: set-output-defaults
@@ -36,9 +36,9 @@ jobs:
       - name: Checkout from Repo
         uses: actions/checkout@v2
         #if: ${{ github.event.inputs.repository == 'true' }}
-        with:
-          repository: lf-retail/app-service
-          ref: main
+        #with:
+          #repository: lf-retail/app-service
+          #ref: main
          
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}
         uses: actions/setup-java@v3
