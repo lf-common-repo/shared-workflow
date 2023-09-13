@@ -6,9 +6,12 @@ on:
       Workflow2_PAT_TOKEN_GITHUB:
         required: true
 
-    #inputs:
-     # repository:
-      #   required: true
+    inputs:
+      repository:
+        type: string
+        required: true
+        default: lf-retail/app-service
+        description: Application
          
 
 env:
@@ -25,9 +28,9 @@ jobs:
     steps:
       - name: Checkout from Repo
         uses: actions/checkout@v2
-        #with:
-         # repository: ${{ github.event.inputs.repository }}
-          #ref: main
+        with:
+          repository: ${{ github.event.inputs.repository }}
+          ref: main
          
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}
         uses: actions/setup-java@v3
