@@ -10,7 +10,7 @@ on:
       repository:
         type: string
         required: true
-        default: lf-retail/app-service
+        #default: lf-retail/app-service
         description: Application
          
 
@@ -31,7 +31,7 @@ jobs:
       - name: set outputs with default values
         id: set-output-defaults
         run: |    
-          echo "::set-output name=repository::${{ github.event.inputs.repository || 'true' }}"
+          echo "::set-output =repository::${{ github.event.inputs.repository || 'true' }}"
       
       - name: Checkout from Repo
         uses: actions/checkout@v2
