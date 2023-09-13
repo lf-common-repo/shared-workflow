@@ -6,12 +6,12 @@ on:
       Workflow2_PAT_TOKEN_GITHUB:
         required: true
 
-   # inputs:
-    #  repository:
-     #   type: string
-      #  required: true
-       # default: lf-retail/app-service
-        #description: Application
+    inputs:
+      repository:
+        type: string
+        required: true
+        #default: lf-retail/app-service
+        description: Application
          
 
 env:
@@ -21,38 +21,17 @@ env:
   repository: ${{ inputs.repository }}
 
 jobs:
-  #EnvSetup:
-   # if: ${{ github.event.inputs.app == 'true' }}
-    #name: Setup Dynamic Environment Variables
-    #runs-on: ubuntu-latest
-    #outputs:
-     # repository: ${{ steps.set-output-defaults.outputs.repository }}
-    #steps:
-     # - name: set outputs with default values
-      #  id: set-output-defaults
-       # run: |    
-        #  echo "::set-output name=repository::${{ github.event.inputs.repository || 'true' }}"
-          
-  #invoke-workflow:
-    #if: ${{ github.event.inputs.app == 'true' }}
-    #needs: EnvSetup
-    #with
-     #repository: lf-retail/app-service
-     #with:
-      #repository: ${{needs.EnvSetup.outputs.repository}}
-    #secrets:
-     # Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
 
   build:
     name: java ci sonar build
     runs-on: ubuntu-latest
       
     steps:
-    
       - name: Checkout from Repo
         uses: actions/checkout@v2
+        if: ${{ github.event.inputs.repository == 'true' }}
         with:
-          repository: lf-retail/app-service #${{ github.event.inputs.repository }}
+          repository: lf-retail/app-service
           ref: main
          
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}
