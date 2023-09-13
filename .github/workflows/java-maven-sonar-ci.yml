@@ -10,7 +10,7 @@ on:
       repository:
         type: string
         required: true
-        #default: lf-retail/app-service
+        default: lf-retail/app-service
         description: Application
          
 
@@ -25,20 +25,12 @@ jobs:
   build:
     name: java ci sonar build
     runs-on: ubuntu-latest
-    outputs:
-      repository: ${{ steps.set-output-defaults.outputs.repository }}
     steps:
-      - name: set outputs with default values
-        id: set-output-defaults
-        run: |    
-          echo "::set-output =repository::${{ github.event.inputs.repository || 'true' }}"
-      
       - name: Checkout from Repo
         uses: actions/checkout@v2
-        #if: ${{ github.event.inputs.repository == 'true' }}
-        #with:
-          #repository: lf-retail/app-service
-          #ref: main
+        with:
+          repository: ${{ github.event.inputs.repository }}
+          ref: main
          
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}
         uses: actions/setup-java@v3
