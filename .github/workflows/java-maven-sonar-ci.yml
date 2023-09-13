@@ -19,9 +19,9 @@ jobs:
     steps:
       - name: Checkout from Repo
         uses: actions/checkout@v2
-        #with:
-          #repository: ${{ github.event.inputs.repository }}
-          #ref: main
+        with:
+          repository: ${{ github.event.inputs.repository }}
+          ref: main
          
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}
         uses: actions/setup-java@v3
