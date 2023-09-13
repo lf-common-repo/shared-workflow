@@ -19,13 +19,35 @@ env:
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
   repository: ${{ inputs.repository }}
-      
+
 jobs:
+  EnvSetup:
+    if: ${{ github.event.inputs.app == 'true' }}
+    name: Setup Dynamic Environment Variables
+    runs-on: ubuntu-latest
+    outputs:
+      repository: ${{ steps.set-output-defaults.outputs.repository }}
+    steps:
+      - name: set outputs with default values
+        id: set-output-defaults
+        run: |    
+          echo "::set-output name=repository::${{ github.event.inputs.repository || 'true' }}"
+          
+  invoke-workflow:
+    if: ${{ github.event.inputs.app == 'true' }}
+    needs: EnvSetup
+    uses: lf-retail/app-service/
+    with:
+      repository: ${{needs.EnvSetup.outputs.repository}}
+    secrets:
+      Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+
   build:
     name: java ci sonar build
     runs-on: ubuntu-latest
       
     steps:
+    
       - name: Checkout from Repo
         uses: actions/checkout@v2
         with:
