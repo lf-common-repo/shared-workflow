@@ -10,7 +10,7 @@ on:
       repository:
         type: string
         required: true
-        #default: lf-retail/app-service
+        default: lf-retail/app-service
         description: Application
          
 
