@@ -8,14 +8,11 @@ on:
         required: true
       token:
         required: true
-    
-
     inputs:
       repository:
         type: string
         required: true
         description: Application
-
       branch:
         type: string
         required: true
@@ -26,7 +23,6 @@ env:
   JAVA_VERSION: '17' 
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
-  #repository: ${{ inputs.repository }}
 
 jobs:
 
@@ -38,6 +34,7 @@ jobs:
         with:
           repository: ${{ github.event.inputs.repository }}
           ref: ${{ github.event.inputs.branch }}
+          token: $GITHUB_TOKEN
          
 
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}   
