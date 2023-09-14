@@ -30,13 +30,15 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout repository
+        uses: actions/checkout@v2
         with:
           repository: ${{ github.event.inputs.repository }}
           ref: ${{ github.event.inputs.branch }}
-          token: $GITHUB_TOKEN
+        env:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
          
-
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}   
         uses: actions/setup-java@v3
         with:
