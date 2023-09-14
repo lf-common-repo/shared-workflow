@@ -33,7 +33,7 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v2
         with:
-          repository: ${{ github.event.inputs.repository }}
+          repository: lf-retail/app-service #${{ github.event.inputs.repository }}
           ref: ${{ github.event.inputs.branch }}
         env:
           token: ${{ secrets.GITHUB_TOKEN }}
