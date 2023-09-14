@@ -6,6 +6,8 @@ on:
     secrets:
       Workflow2_PAT_TOKEN_GITHUB:
         required: true
+      PAT_TOKEN:
+        required: true
 
     inputs:
       repository:
