@@ -22,31 +22,26 @@ env:
 
 jobs:
 
-  #EnvSetup:
-    #if: ${{ github.event.inputs.repository =='true' }}
-    #name: Setup Dynamic Environment Variables
-    #runs-on: ubuntu-latest
-    #outputs:
-      #repository: ${{ steps.set-output-defaults.outputs.repository }}
-    #steps:
-      #- name: set outputs with default values
-        #id: set-output-defaults
-        #run: |    
-          #echo "::set-output name=repository::${{ github.event.inputs.repository || 'true' }}"
-    #build:
-     # if: ${{ github.event.inputs.repository =='true' }}
-     # needs: [EnvSetup]
-     # uses: actions/checkout@v2
-      #with:
-        #repository: ${{ github.event.inputs.repository }}
+  EnvSetup:
+    if: ${{ github.event.inputs.repository =='true' }}
+    name: Setup Dynamic Environment Variables
+    runs-on: ubuntu-latest
+    outputs:
+      repository: ${{ steps.set-output-defaults.outputs.repository }}
+    steps:
+      - name: set outputs with default values
+        id: set-output-defaults
+        run: |    
+          echo "::set-output name=repository::${{ github.event.inputs.repository || 'true' }}"
+    build:
+      if: ${{ github.event.inputs.repository =='true' }}
+      needs: [EnvSetup]
+      uses: actions/checkout@v2
+      with:
+        repository: ${{ github.event.inputs.repository }}
         #ref: main
          
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ github.event.inputs.repository }}
-          ref: main
-       
+
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}   
         uses: actions/setup-java@v3
         with:
