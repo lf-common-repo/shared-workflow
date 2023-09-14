@@ -12,6 +12,11 @@ on:
         type: string
         required: true
         description: Application
+
+      branch:
+        type: string
+        required: true
+        description: Branch Name
          
 
 env:
@@ -29,7 +34,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: ${{ github.event.inputs.repository }}
-          ref: main
+          ref: ${{ github.event.inputs.branch }}
          
 
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}   
