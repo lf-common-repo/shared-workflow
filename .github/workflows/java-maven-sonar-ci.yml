@@ -33,13 +33,13 @@ jobs:
         id: set-output-defaults
         run: |    
           echo "::set-output name=repository::${{ github.event.inputs.repository || 'true' }}"
-    build:
-      if: ${{ github.event.inputs.repository =='true' }}
-      needs: [EnvSetup]
-      uses: actions/checkout@v2
-      with:
-         repository: ${{ github.event.inputs.repository }}
-         ref: main
+    #build:
+     # if: ${{ github.event.inputs.repository =='true' }}
+     # needs: [EnvSetup]
+     # uses: actions/checkout@v2
+     # with:
+       #  repository: ${{ github.event.inputs.repository }}
+        # ref: main
          
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}
         uses: actions/setup-java@v3
