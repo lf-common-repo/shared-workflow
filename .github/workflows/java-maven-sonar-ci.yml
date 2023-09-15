@@ -23,6 +23,7 @@ env:
   JAVA_VERSION: '17' 
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+  REPOSITORY: ${{ inputs.repoName }}
 
 jobs:
 
@@ -34,9 +35,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: ${{ inputs.repoName }}
-          ref: ${{ inputs.branchName }}
-        env:
+          ref: release/r-${{inputs.releaseNo}}
           token: ${{ secrets.GITHUB_TOKEN }}
+        env:
           Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
          
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}   
