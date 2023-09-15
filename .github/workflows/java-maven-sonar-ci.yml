@@ -9,7 +9,7 @@ on:
       token:
         required: true
     inputs:
-      repository:
+      repoName:
         type: string
         required: true
         description: Application
@@ -33,7 +33,7 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v2
         with:
-          repository: ${{ github.event.inputs.repository }}
+          repository: ${{ github.event.inputs.repoName }}
           ref: ${{ github.event.inputs.branch }}
         env:
           token: ${{ secrets.GITHUB_TOKEN }}
