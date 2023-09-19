@@ -66,8 +66,9 @@ jobs:
       - name: Build project with Maven
         run: mvn -B package --file pom.xml	 
         
-      - name: Publish package
-        run: mvn --batch-mode deploy
+      #- name: Publish package
+       # run: mvn --batch-mode deploy
+        
         #env:
          # GITHUB_TOKEN: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}   
        
