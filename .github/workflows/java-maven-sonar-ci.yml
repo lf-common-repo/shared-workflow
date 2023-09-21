@@ -4,8 +4,8 @@ on:
   #workflow_dispatch:
   workflow_call:
     secrets:
-      Workflow2_PAT_TOKEN_GITHUB:
-        required: true
+      #Workflow2_PAT_TOKEN_GITHUB:
+       # required: true
       token:
         required: true
     inputs:
@@ -37,8 +37,8 @@ jobs:
           repository: ${{ inputs.repoName }}
           ref: release/r-${{inputs.releaseNo}}
           token: ${{ secrets.GITHUB_TOKEN }}
-        env:
-          Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
+        #env:
+         # Workflow2_PAT_TOKEN_GITHUB: ${{ secrets.Workflow2_PAT_TOKEN_GITHUB }}
          
       - name: Setup Java Sdk ${{env.JAVA_VERSION}}   
         uses: actions/setup-java@v3
